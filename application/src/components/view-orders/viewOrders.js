@@ -40,6 +40,22 @@ class ViewOrders extends Component {
       .catch((error) => console.error(error));
   }
 
+  editOrder(orderId) {
+    fetch(EDIT_ORDER_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        id: orderId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        this.props.history.push(`/order/${orderId}`);
+      })
+      .catch((error) => console.error(error));
+  }
+
   render() {
     return (
       <Template>
@@ -60,10 +76,15 @@ class ViewOrders extends Component {
                   <p>Quantity: {order.quantity}</p>
                 </div>
                 <div className="col-md-4 view-order-right-col">
-                  <button className="btn btn-success">Edit</button>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => this.editOrder(order._id)}
+                  >
+                    Edit
+                  </button>
                   <button
                     className="btn btn-danger"
-                    value={this.state.order_item}
+                    value={this.state.order}
                     onClick={() => this.deleteOrder(order._id)}
                   >
                     Delete
