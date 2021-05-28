@@ -2,6 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./nav.css";
 
+import { logoutUser } from "../../redux/actions/authActions";
+import { connect } from "react-redux";
+
+const mapActionsToProps = (dispatch) => ({
+  commenceLogoutUser() {
+    dispatch(logoutUser());
+  },
+});
+
 const Nav = (props) => {
   return (
     <div className="nav-strip">
@@ -17,11 +26,16 @@ const Nav = (props) => {
       </Link>
       <Link to={"/"} className="nav-link">
         <div className="nav-link-style">
-          <label className="nav-label">Log Out</label>
+          <label
+            className="nav-label"
+            onClick={() => props.commenceLogoutUser()}
+          >
+            Log Out
+          </label>
         </div>
       </Link>
     </div>
   );
 };
 
-export default Nav;
+export default connect(null, mapActionsToProps)(Nav);
